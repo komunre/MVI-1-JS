@@ -152,10 +152,10 @@ class Memory {
 					this.mem.push(7);
 					this.mem.push(this.pseudoMem[i].getArg(0));
 				break;
-				/*case 'pop':
-					this.mem.push(2);
-					this.mem.push(Number(this.pseudoMem[i].getArg(0)));
-				break;*/
+				case 'mul':
+					this.mem.push(8);
+					this.mem.push(this.pseudoMem[i].getArg(0));
+				break;
 				default:
 					this.marks[this.marks.length] = {cmd: this.pseudoMem[i].getName(), step: this.mem.length - 1};
 					this.mem.push(this.pseudoMem[i].getName());

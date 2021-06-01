@@ -26,7 +26,7 @@
 	function sendChanges(program) {
 		req.open("POST", "/api");
 		req.setRequestHeader('Content-Type', 'application/json');
-		req.send(JSON.stringify({type: "save", program: program + '\n'}));
+		req.send(JSON.stringify({type: "save", program: program}));
 	}
 
 	function getMemData(mem) {

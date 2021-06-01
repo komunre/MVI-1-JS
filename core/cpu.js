@@ -155,6 +155,17 @@ class CPU {
 					this.jumpTo(this.memory.getMemIndex(this.counter));
 				}
 			break;
+			case 8:
+				this.counter++;
+				let numOrMemMul = this.memory.getMemIndex(this.counter);
+				if (!isNaN(numOrMemMul)) {
+					this.accum *= Number(numOrMemMul);
+				}
+				else {
+					numOrMemMul = this.getDataIndex(numOrMemMul);
+					this.accum *= Number(this.memory.getDataMemIndex(Number(numOrMemMul)));
+				}
+			break;
 			default:
 					
 			break;
