@@ -51,6 +51,7 @@ class Memory {
 		let status = 'begin';
 
 		console.log(`Reading ${str.length} characters...`);
+		str = str.concat('\n');
 
 		for (let i = 0; i < str.length; i++) {
 			switch (status) {
