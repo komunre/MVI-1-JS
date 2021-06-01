@@ -45,6 +45,6 @@ app.post('/api', (req, res) => {
 	}
 })
 
-app.listen(3333, () => {
-	console.log("listening...");
+app.listen(process.env.PORT, () => {
+	console.log(`listening on ${process.env.PORT}...`);
 })
