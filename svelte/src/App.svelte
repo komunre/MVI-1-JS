@@ -1,6 +1,6 @@
 <script>
 	let name = "anon";
-	let title = "CSIM-JS"
+	let title = "MVI-1-JS"
 	import Editor from './Editor.svelte';
 </script>
 
