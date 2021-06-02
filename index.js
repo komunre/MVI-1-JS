@@ -83,6 +83,9 @@ app.post('/api', async (req, res) => {
 	}
 	else if (req.body.type == 'mem') {
 		cpus[cpuNum].cpu.setDataMem(req.body.index, req.body.value);
+
+		let data = cpus[cpuNum].cpu.step();
+		res.send(data);
 	}
 	else {
 		res.send({err: "unknown"});
