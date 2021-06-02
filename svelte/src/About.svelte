@@ -12,7 +12,7 @@
 	<p>1 - clear (boolean)</p>
 	<p>2 - X</p>
 	<p>3 - Y</p>
-	<p>4 - draw pixel (boolean)</p>
+	<p>5 - draw pixel (boolean)</p>
 
 	<h2>Buttons</h2>
 	<p>4 - which button is active (button number * 10)</p>
