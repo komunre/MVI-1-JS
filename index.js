@@ -75,7 +75,7 @@ app.post('/api', async (req, res) => {
 	}
 	else if (req.body.type == 'save') {
 		cpus[cpuNum].cpu.load(req.body.program);
-		fs.writeFile(__dirname + '/programs/main.asm', req.body.program, () => {});
+		fs.writeFile(__dirname + `/programs/${req.cookies.user}/main.asm`, req.body.program, () => {});
 	}
 	else if (req.body.type == 'step') {
 		let data = cpus[cpuNum].cpu.step();
