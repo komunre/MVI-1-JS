@@ -6,15 +6,19 @@
 	function auth() {
 		req.open("POST", "/api");
 		req.setRequestHeader('Content-Type', 'application/json');
+		req.onload = () => {
+			location.reload();
+		}
 		req.send(JSON.stringify({type: "login", user: user, pass: pass}));
-		window.location.reload(true);
 	}
 
 	function register() {
 		req.open("POST", "/api");
 		req.setRequestHeader('Content-Type', 'application/json');
-		req.send(JSON.stringify({type: "register", user: user, pass: pass}));
-		window.location.reload(true);
+		req.onload = () => {
+			location.reload();
+		}
+		req.send(JSON.stringify({type: "register", user: user, pass: pass}));	
 	}
 </script>
 

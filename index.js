@@ -43,7 +43,7 @@ app.post('/api', async (req, res) => {
 		return;
 	}
 	let cpuNum = -1;
-	if (!await db.checkAuth(req.cookies.user, req.cookies.token)){
+	if (req.cookies.user == undefined || req.cookies.token == undefined || !await db.checkAuth(req.cookies.user, req.cookies.token)){
 		res.send({err: "Not authenticated"});
 		return;
 	}

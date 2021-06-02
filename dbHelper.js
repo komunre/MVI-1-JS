@@ -52,6 +52,9 @@ class DBHelper {
 
 	async checkAuth(user, token) {
 		let userDB = await this.client.query('select token from users where username=$1', [user]);
+		if (userDB.rows[0] == undefined) {
+			return false;
+		}
 		if (userDB.rows[0].token == token) {
 			console.log('auth check passed');
 			return true;
