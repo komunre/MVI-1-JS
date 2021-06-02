@@ -24,8 +24,6 @@ app.get('/', (req, res) => {
 });
 
 app.post('/api', async (req, res) => {
-	console.log("API request");
-	console.dir(req.body);
 
 	if (req.body.type == 'login') {
 		let token = await db.login(req.body.user, req.body.pass);

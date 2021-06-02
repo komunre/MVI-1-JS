@@ -47,12 +47,12 @@
 
 	#about-show {
 		position: absolute;
-		left: 1000px;
+		right: 20px;
 	}
 
 	#about-close {
 		position: absolute;
-		left: 1000px;
+		right: 20px;
 		bottom: 300px;
 	}
 
