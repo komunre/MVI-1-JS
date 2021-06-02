@@ -38,6 +38,9 @@ class DBHelper {
 
 	async login(user, pass_in) {
 		let pass = await this.client.query('select passw from users where username=$1', [user]);
+		if (pass.rows[0] == undefined) {
+			return '';
+		}
 		if (bcrypt.compareSync(pass_in, pass.rows[0].passw)){
 			let token = this.genToken();
 			this.client.query('update users set token=$1', [token]);
