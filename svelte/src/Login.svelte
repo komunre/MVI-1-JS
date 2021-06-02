@@ -22,6 +22,7 @@
 	}
 </script>
 
+<p id="warn">Please use new password for this site</p>
 <input type="text" bind:value={user}>
 <input type="password" bind:value={pass}>
 <button on:click={auth}>Log In</button>
@@ -30,5 +31,10 @@
 <style>
 	input {
 		width: 100px;
+	}
+
+	#warn {
+		font-size: 14px;
+		color: rgb(255, 201, 22);
 	}
 </style>

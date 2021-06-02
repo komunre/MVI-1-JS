@@ -22,13 +22,13 @@
 	<p>M - memory</p>
 	<p>I - integer</p>
 	<br/>
-	<p>mov ACC/I, ACC/M</p>
+	<p>mov ACC/I/M, ACC/M</p>
 	<p>add M/I</p>
 	<p>sub M/I</p>
 	<p>div M/I</p>
 	<p>mul M/I</p>
 	<p>[any]:</p>
-	<p>test ACC/I {operators} ACC/I</p>
+	<p>test ACC/I/M {operators} ACC/I/M</p>
 	<p>tjmp [any]</p>
 	<p>fjmp [any]</p>
 	<p>jmp [any]</p>

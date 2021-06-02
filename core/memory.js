@@ -104,6 +104,7 @@ class Memory {
 				console.log(`${mark}:${this.marks[i].cmd}`);
 			}
 		};
+		this.err = "Wrong jump";
 		return -1;
 	}
 
@@ -120,12 +121,7 @@ class Memory {
 						this.err = "Wrong memory address";
 						return;
 					}*/
-					if (!isNaN(this.pseudoMem[i].getArg(1))) {
-						this.mem.push(Number(this.pseudoMem[i].getArg(1)) + this.cmdLen);
-					}
-					else if (this.pseudoMem[i].getArg(1) == 'acc') {
-						this.mem.push(0);
-					}
+					this.mem.push(this.pseudoMem[i].getArg(1));
 				break;
 				case 'add':
 					this.mem.push(2);

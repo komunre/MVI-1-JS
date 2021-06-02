@@ -62,23 +62,26 @@ class CPU {
 				this.counter++;
 				let memIndex = this.memory.getMemIndex(this.counter);
 				if (!isNaN(num)) {
-					if (memIndex != 0) {
-						this.memory.setMemIndex(memIndex, Number(num));
+					if (memIndex != '[acc]') {
+						this.memory.setMemDataIndex(Number(memIndex), Number(num));
 					}
 					else {
 						this.accum = Number(num);
 					}
 				}
-				else if (!isNaN(this.getDataIndex(num)) && memIndex == 0) {
+				else if ((!isNaN(this.getDataIndex(num)) && !isNaN(this.getDataIndex(memIndex))) || ((!isNaN(this.getDataIndex(num)) && !isNaN(memIndex)))) {
+					this.memory.setMemDataIndex(Number(this.getDataIndex(memIndex)), Number(this.memory.getDataMemIndex(Number(this.getDataIndex(num)))));
+				}
+				else if (!isNaN(this.getDataIndex(num)) && this.getDataIndex(memIndex) == 'acc') {
 					num = this.getDataIndex(num);
 					console.log(`Getting ${num} data index to acc`);
-					this.accum = this.memory.getDataMemIndex(Number(num));
+					this.accum = this.memory.getDataMemIndex(Number(this.getDataIndex(num)));
 				}
 				else if (num == '[acc]') {
-					this.memory.setMemIndex(memIndex, this.accum);
+					this.memory.setMemDataIndex(Number(memIndex), Number(this.accum));
 				}
 				else {
-					return;
+					console.log('lol, mov error');
 				}
 			break;
 			case 2:
@@ -124,6 +127,9 @@ class CPU {
 					if (numOrMemT == 'acc') {
 						numOrMemT = this.accum;
 					}
+					else if (!isNaN(numOrMemT)) {
+						numOrMemT = this.memory.getDataMemIndex(Number(numOrMemT));
+					}
 				}
 				if (!isNaN(numOrMemT2)) {
 					numOrMemT2 = Number(numOrMemT2);
@@ -132,6 +138,9 @@ class CPU {
 					numOrMemT2 = this.getDataIndex(numOrMemT2);
 					if (numOrMemT2 == 'acc') {
 						numOrMemT2 = this.accum;
+					}
+					else if (!isNaN(numOrMemT2)) {
+						numOrMemT2 = this.memory.getDataMemIndex(Number(numOrMemT2));
 					}
 				}
 
