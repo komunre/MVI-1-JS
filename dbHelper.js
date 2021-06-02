@@ -44,7 +44,7 @@ class DBHelper {
 		}
 		if (bcrypt.compareSync(pass_in, pass.rows[0].passw)){
 			let token = this.genToken();
-			this.client.query('update users set token=$1', [token]);
+			this.client.query('update users set token=$1 where username=$2', [token, user]);
 			console.log('Logged in');
 			console.log(token);
 			return token;
