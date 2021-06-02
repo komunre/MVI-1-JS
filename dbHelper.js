@@ -24,14 +24,15 @@ class DBHelper {
 		return token;
 	}
 
-	register(user, pass) {
-		let logged = this.login(user, pass);
+	async register(user, pass) {
+		let logged = await this.login(user, pass);
+		console.log(logged);
 		if (logged != '' && logged != undefined) {
 			return {user: user, token: logged};
 		}
 		let hash = bcrypt.hashSync(pass, 10);
 		let token = this.genToken();
-		this.client.query('INSERT INTO users (username, passw, token) VALUES ($1, $2, $3)', [user, hash, token]);
+		await this.client.query('INSERT INTO users (username, passw, token) VALUES ($1, $2, $3)', [user, hash, token]);
 		console.log("New user registered");
 		return {user: user, token: token};
 	}
