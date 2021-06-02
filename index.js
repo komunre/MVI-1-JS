@@ -1,13 +1,18 @@
 const express = require('express');
 const fs = require('fs');
 const app = express();
+const cookieParser = require('cookie-parser');
 
-let cpu = require('./core/cpu');
+const db = require('./dbHelper');
+let cpuClass = require('./core/cpu');
+
+let cpus = [];
 
 app.use('/build', express.static(__dirname + '/svelte/public/build'));
 app.use('/', express.static(__dirname + '/public'));
 app.use(express.json());
 app.use('/', express.static(__dirname + '/svelte/public'));
+app.use(cookieParser());
 
 app.get('/', (req, res) => {
 	fs.readFile(__dirname + "/svelte/public/index.html", (err, data) => {
@@ -18,14 +23,52 @@ app.get('/', (req, res) => {
 	})
 });
 
-app.post('/api', (req, res) => {
+app.post('/api', async (req, res) => {
 	console.log("API request");
 	console.dir(req.body);
+
+	if (req.body.type == 'login') {
+		let token = await db.login(req.body.user, req.body.pass);
+		if (token != '') {
+			res.cookie('token', token).cookie('user', req.body.user).send();
+		}
+		else {
+			res.send({err: 'wrong login or password'});
+		}
+		return;
+	}
+	if (req.body.type == 'register') {
+		let user = await db.register(req.body.user, req.body.pass);
+		res.cookie('user', user.user).cookie('token', user.token).send();
+		return;
+	}
+	let cpuNum = -1;
+	if (!await db.checkAuth(req.cookies.user, req.cookies.token)){
+		res.send({err: "Not authenticated"});
+		return;
+	}
+	else {
+		for (let i = 0; i < cpus.length; i++) {
+			if (cpus[i].user == req.cookies.user) {
+				cpuNum = i;
+			}
+		}
+		if (cpuNum == -1) {
+			cpuNum = cpus.length;
+			cpus.push({user: req.cookies.user, cpu: new cpuClass()});
+			console.dir(cpus);
+		}
+	}
 	if (req.body.type == "program") {
-		fs.readFile(__dirname + '/programs/main.asm', (err, data) => {
+		if (!fs.existsSync(__dirname + `/programs/${req.cookies.user}/main.asm`)) {
+			fs.mkdirSync(`${__dirname}/programs/${req.cookies.user}/`);
+			fs.writeFileSync(`${__dirname}/programs/${req.cookies.user}/main.asm`, "mov 1 1\nmov 0 1");
+		}
+		fs.readFile(__dirname + `/programs/${req.cookies.user}/main.asm`, (err, data) => {
 			if (err) {
 				console.error(err);
 				res.send(err);
+				return;
 			}
 			
 			console.log(`Sending ${data}...`);
@@ -33,15 +76,15 @@ app.post('/api', (req, res) => {
 		})
 	}
 	else if (req.body.type == 'save') {
-		cpu.load(req.body.program);
+		cpus[cpuNum].cpu.load(req.body.program);
 		fs.writeFile(__dirname + '/programs/main.asm', req.body.program, () => {});
 	}
 	else if (req.body.type == 'step') {
-		doCpuStep(res);
+		let data = cpus[cpuNum].cpu.step();
+		res.send(data);
 	}
 	else if (req.body.type == 'mem') {
-		cpu.setDataMem(req.body.index, req.body.value);
-		doCpuStep(res);
+		cpus[cpuNum].cpu.setDataMem(req.body.index, req.body.value);
 	}
 	else {
 		res.send({err: "unknown"});

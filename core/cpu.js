@@ -204,4 +204,4 @@ class CPU {
 	}
 }
 
-module.exports = new CPU();
+module.exports = CPU;

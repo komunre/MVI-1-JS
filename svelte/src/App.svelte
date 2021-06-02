@@ -3,6 +3,7 @@
 	let title = "MVI-1-JS"
 	import Editor from './Editor.svelte';
 	import About from './About.svelte';
+	import Login from './Login.svelte';
 
 	let showAbout = false;
 
@@ -25,6 +26,9 @@
 		<button id="about-close" on:click={closeAbout}>Close</button>
 		<About show=false />
 	{/if}
+	<div id="login">
+		<Login />
+	</div>
 </main>
 
 <style>
@@ -50,6 +54,13 @@
 		position: absolute;
 		left: 1000px;
 		bottom: 300px;
+	}
+
+	#login {
+		position: absolute;
+		right: 5px;
+		top: 400px;
+		width: 250px;
 	}
 
 	@media (min-width: 640px) {

@@ -11,7 +11,9 @@
 	let cmdLen = 1024;
 	req.open("POST", "/api");
 	req.onload = () => {
-		program = JSON.parse(req.response).program;
+		let parsed = JSON.parse(req.response);
+		err = parsed.err;
+		program = parsed.program;
 	}
 	req.setRequestHeader("Content-Type", "application/json")
 	req.send(JSON.stringify({type: "program"}));
