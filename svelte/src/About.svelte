@@ -13,6 +13,9 @@
 	<p>2 - X</p>
 	<p>3 - Y</p>
 
+	<h2>Buttons</h2>
+	<p>4 - which button is active (button number * 10)</p>
+
 	<h1>Instructions</h1>
 	<p>ACC - accumulator</p>
 	<p>M - memory</p>
@@ -21,12 +24,14 @@
 	<p>mov ACC/I, ACC/M</p>
 	<p>add M/I</p>
 	<p>sub M/I</p>
+	<p>div M/I</p>
+	<p>mul M/I</p>
 	<p>[any]:</p>
 	<p>test ACC/I {operators} ACC/I</p>
 	<p>tjmp [any]</p>
 	<p>fjmp [any]</p>
 	<p>jmp [any]</p>
-	<p>mul M/I</p>
+	<p>xchg M</p>
 
 	<h1>Memory guide</h1>
 	<p>Memory is numbers or strings in a list. You can see this list on the left side of screen. You can write to memory using something like <b>mov 123 1</b> or read using <b>mov [1] acc</b>. There is a lot more memory than just one. Use it until it overflows</p>

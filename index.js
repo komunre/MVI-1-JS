@@ -37,13 +37,21 @@ app.post('/api', (req, res) => {
 		fs.writeFile(__dirname + '/programs/main.asm', req.body.program, () => {});
 	}
 	else if (req.body.type == 'step') {
-		let data = cpu.step();
-		res.send(data);
+		doCpuStep(res);
+	}
+	else if (req.body.type == 'mem') {
+		cpu.setDataMem(req.body.index, req.body.value);
+		doCpuStep(res);
 	}
 	else {
 		res.send({err: "unknown"});
 	}
 })
+
+function doCpuStep(res) {
+	let data = cpu.step();
+	res.send(data);
+}
 
 app.listen(process.env.PORT, () => {
 	console.log(`listening on ${process.env.PORT}...`);

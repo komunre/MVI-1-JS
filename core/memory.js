@@ -157,6 +157,14 @@ class Memory {
 					this.mem.push(8);
 					this.mem.push(this.pseudoMem[i].getArg(0));
 				break;
+				case 'xchg':
+					this.mem.push(9);
+					this.mem.push(this.pseudoMem[i].getArg(0));
+				break;
+				case 'div':
+					this.mem.push(10);
+					this.mem.push(this.pseudoMem[i].getArg(0));
+				break;
 				default:
 					this.marks[this.marks.length] = {cmd: this.pseudoMem[i].getName(), step: this.mem.length - 1};
 					this.mem.push(this.pseudoMem[i].getName());

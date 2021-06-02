@@ -66,11 +66,9 @@
 		req.send(JSON.stringify({type: "step"}));
 	}
 
-	$: {
+	$: if (running) {
 		counter;
-		if (running) {
-			doStep();
-		}
+		doStep();
 		if (counter > memory.length || (memory[counter] != null && memory[counter].includes("undefined"))) {
 			running = false;
 		}
@@ -78,6 +76,12 @@
 	function runProgram() {
 		running = !running;
 		doStep();
+	}
+
+	function sendMemToServer(index, value) {
+		req.open('POST', '/api');
+		req.setRequestHeader('Content-Type', 'application/json');
+		req.send(JSON.stringify({type: 'mem', index: index, value: value}));
 	}
 
 </script>
@@ -105,6 +109,13 @@
 		let screen = document.getElementById("screen");
 		screen.fillRect(0, 0, 150, 150);
 	</script>
+
+	<button on:click={() => {sendMemToServer(4, 10)}}>Button1</button>
+	<button on:click={() => {sendMemToServer(4, 20)}}>Button2</button>
+	<button on:click={() => {sendMemToServer(4, 30)}}>Button3</button>
+	<button on:click={() => {sendMemToServer(4, 40)}}>Button4</button>
+	<button on:click={() => {sendMemToServer(4, 50)}}>Button5</button>
+	<button on:click={() => {sendMemToServer(4, 60)}}>Button6</button>
 </div>
 
 <style>

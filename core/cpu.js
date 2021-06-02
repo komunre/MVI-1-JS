@@ -18,6 +18,10 @@ class CPU {
 		
 	}
 
+	setDataMem(index, value) {
+		this.memory.setMemDataIndex(index, value);
+	}
+
 	jump() {
 		this.counter++;
 
@@ -164,6 +168,24 @@ class CPU {
 				else {
 					numOrMemMul = this.getDataIndex(numOrMemMul);
 					this.accum *= Number(this.memory.getDataMemIndex(Number(numOrMemMul)));
+				}
+			break;
+			case 9:
+				this.counter++;
+				let mmIndex = this.memory.getMemIndex(this.counter);
+				let tmp = this.memory.getDataMemIndex(Number(mmIndex));
+				this.memory.setMemDataIndex(Number(mmIndex), this.accum);
+				this.accum = tmp;
+			break;
+			case 10:
+				this.counter++;
+				let numDiv = this.memory.getMemIndex(this.counter);
+				if (!isNaN(numDiv)) {
+					this.accum /= Number(numDiv);
+				}
+				else {
+					numDiv = this.getDataIndex(numDiv);
+					this.accum /= Number(this.memory.getDataMemIndex(Number(numDiv)));
 				}
 			break;
 			default:
