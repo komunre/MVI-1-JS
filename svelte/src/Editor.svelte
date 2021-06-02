@@ -62,7 +62,9 @@
 			err = parsed.err;
 			cmdLen = parsed.cmdLen;
 
-			drawScreen();
+			if (getMemData(memory[cmdLen + 5]) == '1') {
+				drawScreen();
+			}
 		}
 		req.setRequestHeader('Content-Type', 'application/json');
 		req.send(JSON.stringify({type: "step"}));
