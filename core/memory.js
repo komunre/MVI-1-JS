@@ -7,6 +7,9 @@ class Memory {
 		this.err = "";
 		this.cmdLen = 1024;
 		this.memLen = 1024;
+
+		this.clientCmdLen = 1024;
+		this.actualData = 0;
 		this.marks = [];
 	}
 
@@ -18,6 +21,14 @@ class Memory {
 		return this.cmdLen;
 	}
 
+	getClientCmdLen() {
+		return this.clientCmdLen;
+	}
+
+	getActualDataLen() {
+		return this.actualData;
+	}
+
 	getMemIndex(index) {
 		return this.mem[index];
 	}
@@ -27,9 +38,28 @@ class Memory {
 	}
 
 	getMem(index) {
+		this.clientCmdLen = this.cmdLen;
+		this.actualData = 0;
 		let memNums = [];
+		let prevMem = undefined;
+		let added = false;
 		for (let i = 0; i < this.mem.length; i++) {
-			memNums.push(`${i}: ${this.mem[i]}`);
+			if (prevMem == undefined && this.mem[i] == undefined && i < this.cmdLen) {
+				if (!added) {
+					memNums.push('[?]: undefined');
+					added = true;
+					this.actualData++;
+				}
+				this.clientCmdLen--;
+			}
+			else {
+				memNums.push(`${i}: ${this.mem[i]}`);
+				added = false;
+				if (i < this.cmdLen) {
+					this.actualData++;
+				}
+			}
+			prevMem = this.mem[i];
 		}
 		return memNums;
 	}

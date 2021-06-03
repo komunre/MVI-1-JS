@@ -209,7 +209,8 @@ class CPU {
 		this.counter++;
 		this.currCmd++;
 
-		return JSON.stringify({counter: this.counter, cmd: this.currCmd, mem: this.memory.getMem(), accum: this.accum, err: this.memory.getErr(), cmdLen: this.memory.getCmdLen()});
+		console.log(this.memory.getActualDataLen());
+		return JSON.stringify({counter: this.counter, cmd: this.currCmd, mem: this.memory.getMem(), accum: this.accum, err: this.memory.getErr(), cmdLen: this.memory.getActualDataLen()});
 	}
 }
 
